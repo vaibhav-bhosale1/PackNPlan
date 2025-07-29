@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import GooglePlacesAutocomplete from 'react-google-places-autocomplete'
+import { LoadScript } from '@react-google-maps/api';
 import { SelectBudgetList, SelectTravelList } from '../constant/options'
 import {Input} from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
@@ -25,10 +26,15 @@ const Createtrip = () => {
            toast.error("Please fill all required field")
             return;
         }
-        console.log(formdata)
+        
     }
 
   return (
+    
+      <LoadScript
+      googleMapsApiKey={import.meta.env.VITE_GOOGLE_PLACE_API_KEY} // Make sure this is defined
+      libraries={['places']}
+    >
     <div className='sm:px-10 md:px-32 lg:px-56 xl:px-10  px-5 mt-30'>
         <h2 className='font-bold text-3xl'>Tell us your travel preference</h2>
         <p className='text-muted-foreground mt-3 text-xl '>We will use this information to create a personalized trip for you.</p>
@@ -89,6 +95,7 @@ const Createtrip = () => {
                <Button onClick={onGenerateTrips}>Generate Trip</Button>
         </div>
     </div>
+   </LoadScript>
   )
 }
 
