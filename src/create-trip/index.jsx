@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import GooglePlacesAutocomplete from 'react-google-places-autocomplete'
 import { LoadScript } from '@react-google-maps/api';
-import { SelectBudgetList, SelectTravelList } from '../constant/options'
+import { AI_PROMPT, SelectBudgetList, SelectTravelList } from '../constant/options'
 import {Input} from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { toast } from "sonner"
+import { chatsession } from '../service/AiModel.js';
 
 const Createtrip = () => {
     const [place,setPlace] = useState()
@@ -21,12 +22,22 @@ const Createtrip = () => {
             })
     }
 
-    const onGenerateTrips=()=>{
+    const onGenerateTrips=async ()=>{
         if(formdata?.noOfDays>9&&!formdata?.location||!formdata?.budget||!formdata?.people||!formdata?.noOfDays){
            toast.error("Please fill all required field")
             return;
         }
-        
+        const FINAL_PROMPT=AI_PROMPT
+        .replace('{location}',formdata?.location?.label)
+        .replace('{totalDays}',formdata?.noOfDays)
+        .replace('{people}',formdata?.people)
+        .replace('{budget}',formdata?.budget)
+        .replace('{totalDays}',formdata?.noOfDays)
+
+        console.log(FINAL_PROMPT)
+
+        const result=await chatsession.sendMessage(FINAL_PROMPT);
+        console.log(result?.response?.text())
     }
 
   return (
