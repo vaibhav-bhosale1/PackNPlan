@@ -3,22 +3,30 @@ import GooglePlacesAutocomplete from 'react-google-places-autocomplete'
 import { SelectBudgetList, SelectTravelList } from '../constant/options'
 import {Input} from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
+import { toast } from "sonner"
 
 const Createtrip = () => {
     const [place,setPlace] = useState()
     const [formdata, setFormdata] = useState([]);
 
     const handleInputChange=(name, value)=>{
+        if(name=="noOfDays"&&value>9){
+            console.log("please enter days less than 9")
+            return;
+        }
             setFormdata({
                 ...formdata,
                 [name]: value
             })
     }
-// RIGHT
-useEffect(() => {
-  console.log(formdata)
-}, [formdata]); // ✅ Correct way to set dependency
 
+    const onGenerateTrips=()=>{
+        if(formdata?.noOfDays>9&&!formdata?.location||!formdata?.budget||!formdata?.people||!formdata?.noOfDays){
+           toast.error("Please fill all required field")
+            return;
+        }
+        console.log(formdata)
+    }
 
   return (
     <div className='sm:px-10 md:px-32 lg:px-56 xl:px-10  px-5 mt-30'>
@@ -41,7 +49,7 @@ useEffect(() => {
             <div>
                 <h2 className='font-bold text-2xl mt-10'>How many days are you planning trip?</h2>
                 <Input placeholder={'Ex 3}'} type="number" className='mt-3' 
-                onChange={(e)=>handleInputChange('noOfdays',e.target.value)}
+                onChange={(e)=>handleInputChange('noOfDays',e.target.value)}
                 />
             </div>
 
@@ -78,7 +86,7 @@ useEffect(() => {
         </div>
 
         <div className='mt-20 flex justify-end'>
-               <Button>Generate Trip</Button>
+               <Button onClick={onGenerateTrips}>Generate Trip</Button>
         </div>
     </div>
   )
