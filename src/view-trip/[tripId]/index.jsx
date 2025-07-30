@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { db } from '../../service/firebaseConfig';
 import InfoSection from '../components/InfoSection';
+import Hotels from '../components/Hotels';
 
 const ViewTrip = () => {
     
@@ -29,6 +30,7 @@ const ViewTrip = () => {
   return (
     <div className='p-10 md:px-20 lg:px-44  xl:px-56'>
         <InfoSection trip={trip}/>
+        <Hotels trip={trip}/>
 
     </div>
   )
