@@ -54,4 +54,4 @@ export const SelectBudgetList=[
     }
 ]
 
-export const AI_PROMPT='Generate Travel Plan for Location: {location} for {totalDays} days for {people} with {budget} Budget,Give me a Hotel Option list with Hotelname,Hotel Address, Price , hotel image url,geo coordinates,rating,description and suggest itinery with placename,Place Details, Place Image url, Geo coordinates, ticket Pricing , ratings,Time to travel each location for {totalDays} days with each day plan with best time to visit in JSON format'
+export const AI_PROMPT='Generate Travel Plan for Location: {location} for {totalDays} days for {people} with {budget} Budget,Give me a Hotel Option list with best Hotelname,Hotel Address, Price ,best hotel image url,geo coordinates,rating,description and suggest itinery with best placename,Place Details,best Place Image url,best time to travel, Geo coordinates, ticket Pricing , ratings,Time to travel each location for {totalDays} days with each day plan with best time to visit in JSON format'

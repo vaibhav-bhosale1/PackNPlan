@@ -43,7 +43,7 @@ const PlaceCardItem = ({ place }) => {
       rel="noopener noreferrer"
       className="block"
     >
-      <div className="shadow-md border-xl p-3 mt-2 flex gap-5 hover:scale-105 transition-all cursor-pointer">
+      <div className="shadow-md border rounded-xl p-3 mt-2 flex gap-5 hover:scale-105 transition-all cursor-pointer">
         <img
           src={photoUrl?photoUrl:'/vite.svg'}
           alt={place?.placeName}
