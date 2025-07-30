@@ -6,14 +6,26 @@ import {Input} from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { toast } from "sonner"
 import { chatsession } from '../service/AiModel.js';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { FcGoogle } from "react-icons/fc";
+import { useGoogleLogin } from '@react-oauth/google';
+import axios from 'axios';
 
 const Createtrip = () => {
     const [place,setPlace] = useState()
     const [formdata, setFormdata] = useState([]);
-
+    const [openDialog,setOpenDialog]=useState(false);
     const handleInputChange=(name, value)=>{
         if(name=="noOfDays"&&value>9){
             console.log("please enter days less than 9")
+            toast.warning("Please Enter values less than 9 days")
             return;
         }
             setFormdata({
@@ -22,9 +34,25 @@ const Createtrip = () => {
             })
     }
 
+    const login=useGoogleLogin({
+        onSuccess:(codeResp)=>GetUserprofile(codeResp),
+        onerror:(error)=>console.log(error)
+    })
+
     const onGenerateTrips=async ()=>{
-        if(formdata?.noOfDays>9&&!formdata?.location||!formdata?.budget||!formdata?.people||!formdata?.noOfDays){
+
+        const user=localStorage.getItem('user')
+
+        if(!user){
+            setOpenDialog(true);
+            return;
+        }
+        if(!formdata?.noOfDays&&!formdata?.location||!formdata?.budget||!formdata?.people||!formdata?.noOfDays){
            toast.error("Please fill all required field")
+            return;
+        }
+        if(!formdata?.noOfDays>9){
+            toast.warning("Please Enter days less than 9 days");
             return;
         }
         const FINAL_PROMPT=AI_PROMPT
@@ -40,10 +68,23 @@ const Createtrip = () => {
         console.log(result?.response?.text())
     }
 
+    const GetUserprofile=async(tokenInfo)=>{
+        axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${tokenInfo?.access_token}`,{
+            headers:{
+                Authorization:`Bearer ${tokenInfo?.access_token}`,
+                Accept:'application/json'
+            }
+        }).then((resp)=>{
+            console.log(resp);
+            localStorage.setItem('user',JSON.stringify(resp.data));
+            setOpenDialog(false);
+            onGenerateTrips();
+        })
+    }
   return (
     
       <LoadScript
-      googleMapsApiKey={import.meta.env.VITE_GOOGLE_PLACE_API_KEY} // Make sure this is defined
+      googleMapsApiKey={import.meta.env.VITE_GOOGLE_PLACE_API_KEY} 
       libraries={['places']}
     >
     <div className='sm:px-10 md:px-32 lg:px-56 xl:px-10  px-5 mt-30'>
@@ -105,6 +146,24 @@ const Createtrip = () => {
         <div className='mt-20 flex justify-end'>
                <Button onClick={onGenerateTrips}>Generate Trip</Button>
         </div>
+                    <Dialog open={openDialog}>
+                 
+                    <DialogContent>
+                        <DialogHeader>
+                        <DialogTitle>Sign In</DialogTitle>
+                        <DialogDescription>
+                            <h2 className='fomt-bold text-lg mt-2'>
+                                Sign In with Google
+                            </h2>
+                            <p>Sign in to the App with Google Auth securely </p>
+                            <Button 
+                            onClick={login}
+                            className="w-full mt-5 flex gap-4 items-center"><FcGoogle className=" mr-1.5 h-8 w-8"/>Sign In with Google</Button>
+                        </DialogDescription>
+                        </DialogHeader>
+                    </DialogContent>
+                    </Dialog>
+
     </div>
    </LoadScript>
   )
