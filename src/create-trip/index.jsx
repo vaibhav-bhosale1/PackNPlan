@@ -20,6 +20,7 @@ import { useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 import { db } from '../service/firebaseConfig.jsx';
 import { LoaderPinwheel } from 'lucide-react';
+import { Router, useNavigate, useNavigation } from 'react-router-dom';
 
 const Createtrip = () => {
     const [place,setPlace] = useState()
@@ -27,6 +28,8 @@ const Createtrip = () => {
     const [openDialog,setOpenDialog]=useState(false);
     const [loading,setLoading]=useState(false);
 
+
+    const navigate=useNavigate()
     const handleInputChange=(name, value)=>{
         if(name=="noOfDays"&&value>9){
             console.log("please enter days less than 9")
@@ -76,6 +79,7 @@ const Createtrip = () => {
         console.log(result?.response?.text())
         saveAiTripData(result?.response?.text());
         setLoading(false);
+      
     }
 
     const saveAiTripData=async (TripData)=>{
@@ -91,6 +95,7 @@ const Createtrip = () => {
         });
 
         setLoading(false);
+          navigate('/view-trip/'+docId);
     }
 
     const GetUserprofile=async(tokenInfo)=>{
