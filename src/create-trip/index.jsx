@@ -6,6 +6,7 @@ import {Input} from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { toast } from "sonner"
 import { chatsession } from '../service/AiModel.js';
+import { doc, setDoc } from "firebase/firestore";
 import {
   Dialog,
   DialogContent,
@@ -17,11 +18,15 @@ import {
 import { FcGoogle } from "react-icons/fc";
 import { useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
+import { db } from '../service/firebaseConfig.jsx';
+import { LoaderPinwheel } from 'lucide-react';
 
 const Createtrip = () => {
     const [place,setPlace] = useState()
     const [formdata, setFormdata] = useState([]);
     const [openDialog,setOpenDialog]=useState(false);
+    const [loading,setLoading]=useState(false);
+
     const handleInputChange=(name, value)=>{
         if(name=="noOfDays"&&value>9){
             console.log("please enter days less than 9")
@@ -39,8 +44,10 @@ const Createtrip = () => {
         onerror:(error)=>console.log(error)
     })
 
-    const onGenerateTrips=async ()=>{
 
+
+    const onGenerateTrips=async ()=>{
+        
         const user=localStorage.getItem('user')
 
         if(!user){
@@ -55,6 +62,7 @@ const Createtrip = () => {
             toast.warning("Please Enter days less than 9 days");
             return;
         }
+        setLoading(true);
         const FINAL_PROMPT=AI_PROMPT
         .replace('{location}',formdata?.location?.label)
         .replace('{totalDays}',formdata?.noOfDays)
@@ -66,6 +74,23 @@ const Createtrip = () => {
 
         const result=await chatsession.sendMessage(FINAL_PROMPT);
         console.log(result?.response?.text())
+        saveAiTripData(result?.response?.text());
+        setLoading(false);
+    }
+
+    const saveAiTripData=async (TripData)=>{
+        setLoading(true);
+        const user=JSON.parse(localStorage.getItem('user'));
+        const docId=Date.now().toString();
+        await setDoc(doc(db, "AiTrips", docId), {
+            userSelection:formdata,
+            tripData:JSON.parse(TripData),
+            userEmail:user?.email,
+            id:docId
+
+        });
+
+        setLoading(false);
     }
 
     const GetUserprofile=async(tokenInfo)=>{
@@ -144,7 +169,19 @@ const Createtrip = () => {
         </div>
 
         <div className='mt-20 flex justify-end'>
-               <Button onClick={onGenerateTrips}>Generate Trip</Button>
+               <Button onClick={onGenerateTrips}
+                   disabled={loading}
+               >
+                {loading ? (
+                <div className="flex items-center gap-2">
+                    Please Wait, Generating Trip...
+                    <LoaderPinwheel className="w-5 h-5 animate-spin" />
+                </div>
+                ) : (
+                'Generate Trip'
+                )}
+
+               </Button>
         </div>
                     <Dialog open={openDialog}>
                  
@@ -157,8 +194,11 @@ const Createtrip = () => {
                             </h2>
                             <p>Sign in to the App with Google Auth securely </p>
                             <Button 
+                            disabled={loading}
                             onClick={login}
-                            className="w-full mt-5 flex gap-4 items-center"><FcGoogle className=" mr-1.5 h-8 w-8"/>Sign In with Google</Button>
+                            className="w-full mt-5 flex gap-4 items-center">
+                                <FcGoogle className=" mr-1.5 h-8 w-8"/>Sign In with Google
+                            </Button>
                         </DialogDescription>
                         </DialogHeader>
                     </DialogContent>
