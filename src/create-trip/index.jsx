@@ -117,7 +117,7 @@ const Createtrip = () => {
       googleMapsApiKey={import.meta.env.VITE_GOOGLE_PLACE_API_KEY} 
       libraries={['places']}
     >
-    <div className='sm:px-10 md:px-32 lg:px-56 xl:px-10  px-5 mt-30'>
+    <div className='sm:px-10 md:px-32 lg:px-56 xl:px-10  px-5 mt-10'>
         <h2 className='font-bold text-3xl'>Tell us your travel preference</h2>
         <p className='text-muted-foreground mt-3 text-xl '>We will use this information to create a personalized trip for you.</p>
 

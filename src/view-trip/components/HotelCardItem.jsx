@@ -17,7 +17,7 @@ const HotelCardItem = ({hotel}) => {
             }
             const result=await GetPlaceDetails(data).then(resp=>{
                
-                const photoname=resp.data.places[0].photos[3].name
+                const photoname=resp.data.places[0].photos[6].name
     
                 const PhotoUrl=PHOTO_REF_URL.replace('NAME',photoname)
     
