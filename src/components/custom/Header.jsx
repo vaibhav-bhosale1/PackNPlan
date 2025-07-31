@@ -108,6 +108,7 @@ const Header = () => {
                             googleLogout();
                             localStorage.clear();
                             console.log("clicked")
+                            window.location.reload()
                     }}
                 >
                     <h2 >Log out</h2></PopoverContent>
