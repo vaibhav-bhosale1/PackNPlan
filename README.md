@@ -2,7 +2,8 @@
 
 **PackNPlan** is a full-stack, AI-powered travel planning web application that helps users build customized itineraries based on their preferences. Built with cutting-edge technologies including React, Gemini AI, Firebase, and Tailwind CSS, this project demonstrates real-world integration of large language models with scalable cloud infrastructure and a responsive modern UI.
 
-![PackNPlan Hero](https://via.placeholder.com/1200x600/4F46E5/FFFFFF?text=PackNPlan+AI+Trip+Planner)
+<img width="1870" height="842" alt="image" src="https://github.com/user-attachments/assets/5987d5d3-30b6-498a-b816-7a32be4c2845" />
+
 
 ---
 
@@ -30,11 +31,6 @@
 - 🎯 **Personalized Suggestions**: AI learns from your preferences to provide better recommendations
 
 ---
-
-## 📸 Screenshots
-
-> *(Add screenshots of homepage, chat interface, itinerary view, and dashboard here)*
-
 ### Key App Screens:
 - **Homepage**: Landing page with AI trip planner introduction
 - **Chat Interface**: Interactive conversation with Gemini AI
