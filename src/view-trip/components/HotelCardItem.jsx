@@ -36,7 +36,7 @@ const HotelCardItem = ({hotel}) => {
                     <div className='my-2'>
                         <h2 className='font-medium '>🏨 {hotel?.hotelName}</h2>
                         <h2 className='font-xs text-gray-500 '>📍 {hotel?.hotelAddress}</h2>
-                        <h2 className='font-sm  '>💵 {hotel?.price}</h2>
+                        <h2 className='font-sm'>💵 {hotel?.price}</h2>
                         <h2 className='font-sm'>⭐ {hotel?.rating}</h2>
 
                     </div>

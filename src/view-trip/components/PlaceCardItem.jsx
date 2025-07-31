@@ -52,7 +52,7 @@ const PlaceCardItem = ({ place }) => {
         <div>
           <h2 className="font-bold text-lg">{place?.placeName}</h2>
           <p className="text-gray-400 text-sm">{place?.placeDetails}</p>
-          <h2 className="mt-2">⌚ {place?.travelTime}</h2>
+          <h2 className="mt-2">⌚ {place?.timeToTravel}</h2>
           <h2>⭐ {place?.rating}</h2>
           <h2>💵 {place?.ticketPricing}</h2>
         </div>
