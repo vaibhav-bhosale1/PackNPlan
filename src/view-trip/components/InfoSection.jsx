@@ -36,7 +36,7 @@ const InfoSection = ({trip}) => {
       {/* Hero Image with Overlay */}
       <div className="relative w-full h-[340px] rounded-xl overflow-hidden shadow-2xl mb-8">
         <img 
-          src={photoUrl ? photoUrl : '/vite.svg'} 
+          src={photoUrl ? photoUrl : 'public/cat_spin_dribble.gif'} 
           alt={trip?.userSelection?.location?.label || "Travel destination"} 
           className='w-full h-full object-cover'
         />

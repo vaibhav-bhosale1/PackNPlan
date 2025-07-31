@@ -6,7 +6,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { googleLogout, useGoogleLogin } from '@react-oauth/google';
-import { useNavigate } from 'react-router-dom';
+import { Router, useNavigate } from 'react-router-dom';
 import {
   Dialog,
   DialogContent,
@@ -47,9 +47,13 @@ const Header = () => {
         })
     }
 
+ 
+
   return (
     <div className='p-3 shadow-md flex justify-between items-center'>
-        <img src="/vite.svg" alt="" />
+        <a to={'/'}>
+        <img src="/public/apple-touch-icon.png" className='h-[35px] w-[35px] cursor-pointer' alt=""/>
+        </a>
         <div>
             {user ?
             <div className='flex items-center gap-3'>

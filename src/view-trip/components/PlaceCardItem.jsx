@@ -48,7 +48,7 @@ const PlaceCardItem = ({ place }) => {
         
           <div className="relative overflow-hidden rounded-xl flex-shrink-0">
             <img
-              src={photoUrl || '/api/placeholder/160/160'}
+              src={photoUrl || 'public/cat_spin_dribble.gif'}
               alt={place?.placeName}
               className="w-32 h-32 object-cover group-hover:scale-105 transition-transform duration-500"
             />

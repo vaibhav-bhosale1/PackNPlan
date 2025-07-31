@@ -36,7 +36,7 @@ const HotelCardItem = ({hotel}) => {
       <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-200 hover:shadow-md transition-all duration-300 group-hover:-translate-y-1">
         <div className="relative overflow-hidden">
           <img  
-            src={photoUrl || '/api/placeholder/300/200'} 
+            src={photoUrl || 'public/cat_spin_dribble.gif'} 
             alt={hotel?.hotelName}
             className='w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500'
           />
