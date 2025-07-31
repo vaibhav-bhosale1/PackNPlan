@@ -17,9 +17,10 @@ import {
 } from "@/components/ui/dialog"
 import { FcGoogle } from 'react-icons/fc';
 import axios from 'axios';
+import { Plane } from 'lucide-react';
 const Header = () => {
   const [openDialog,setOpenDialog]=useState(false);
-     const [loading,setLoading]=useState(false);
+  const [loading,setLoading]=useState(false);
   
     const user=JSON.parse(localStorage.getItem('user'));
  
@@ -47,14 +48,48 @@ const Header = () => {
         })
     }
 
+     const smoothScrollTo = (elementId) => {
+    document.getElementById(elementId)?.scrollIntoView({
+      behavior: "smooth",
+    })
+  }
  
 
   return (
-    <div className='p-3 shadow-md flex justify-between items-center'>
-        <a to={'/'}>
-        <img src="/public/apple-touch-icon.png" className='h-[35px] w-[35px] cursor-pointer' alt=""/>
-        </a>
-        <div>
+    
+<nav className="fixed top-0 w-full bg-white/80 backdrop-blur-md z-50 border-b border-white/20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center py-4">
+            <div className="flex items-center space-x-2">
+              <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
+                <Plane className="w-5 h-5 text-white" />
+              </div>
+              <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                packNplan
+              </span>
+            </div>
+            <div className="hidden md:flex space-x-8">
+              <button
+                onClick={() => smoothScrollTo("features")}
+                className="text-gray-600 hover:text-blue-600 transition-colors"
+              >
+                Features
+              </button>
+              <button
+                onClick={() => smoothScrollTo("how-it-works")}
+                className="text-gray-600 hover:text-blue-600 transition-colors"
+              >
+                How it Works
+              </button>
+              <button
+                onClick={() => smoothScrollTo("pricing")}
+                className="text-gray-600 hover:text-blue-600 transition-colors"
+              >
+                Pricing
+              </button>
+            </div>
+           
+            <div>
             {user ?
             <div className='flex items-center gap-3'>
                 <a href="/my-trips">
@@ -105,8 +140,14 @@ const Header = () => {
             
         }
         </div>
-    </div>
+            
+          </div>
+        </div>
+      </nav>
+   
   )
 }
 
 export default Header
+
+

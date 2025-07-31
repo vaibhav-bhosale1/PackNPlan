@@ -2,15 +2,14 @@
 import { Link } from 'react-router-dom'
 import './App.css'
 import { Button } from "@/components/ui/button"
+import LandingPage from './components/custom/LandingPage'
 
 function App() {
 
   return (
     <>
 
-    <Link to="/create-trip">
-      <Button>Create Trip</Button>
-    </Link>
+    <LandingPage/>
     </>
   )
 }
