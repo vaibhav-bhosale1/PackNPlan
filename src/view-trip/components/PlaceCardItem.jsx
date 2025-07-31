@@ -35,29 +35,52 @@ const PlaceCardItem = ({ place }) => {
 
 
   return (
-    <a
-      href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-        place?.placeName + "," + place?.placeDetails
-      )}`}
+   <a
+      href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(place?.placeName + "," + place?.placeDetails)}`}
       target="_blank"
       rel="noopener noreferrer"
-      className="block"
+      className="group block"
     >
-      <div className="shadow-md border rounded-xl p-3 mt-2 flex gap-5 hover:scale-105 transition-all cursor-pointer">
-        <img
-          src={photoUrl?photoUrl:'/vite.svg'}
-          alt={place?.placeName}
-          className="w-[130px] h-[130px] rounded-xl object-cover"
-        />
-        <div>
-          <h2 className="font-bold text-lg">{place?.placeName}</h2>
-          <p className="text-gray-400 text-sm">{place?.placeDetails}</p>
-          <h2 className="mt-2">⌚ {place?.timeToTravel}</h2>
-          <h2>⭐ {place?.rating}</h2>
-          <h2>💵 {place?.ticketPricing}</h2>
+       <h2>Time to visit: {place?.time}</h2>
+      <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-200 hover:shadow-md transition-all duration-300 group-hover:-translate-y-0.5">
+          
+        <div className="flex gap-5 p-5">
+        
+          <div className="relative overflow-hidden rounded-xl flex-shrink-0">
+            <img
+              src={photoUrl || '/api/placeholder/160/160'}
+              alt={place?.placeName}
+              className="w-32 h-32 object-cover group-hover:scale-105 transition-transform duration-500"
+            />
+          </div>
+         
+          <div className="flex-1 space-y-3">
+            <h4 className="text-lg font-semibold text-gray-900 group-hover:text-gray-700 transition-colors line-clamp-2">
+              {place?.placeName}
+            </h4>
+            <p className="text-gray-600 text-sm line-clamp-3 leading-relaxed">
+              {place?.details}
+            </p>
+            
+            <div className="grid grid-cols-2 gap-3 pt-3">
+              <div className="flex items-center gap-2">
+               ⌚
+                <span className="text-xs font-medium text-gray-700">{place?.travelTime}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                ⭐
+                <span className="text-xs font-medium text-gray-700">{place?.rating}</span>
+              </div>
+              <div className="flex items-center gap-2 col-span-2">
+                💵
+                <span className="text-xs font-medium text-gray-700">{place?.ticketPrice}</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </a>
+    
   );
 };
 
