@@ -16,6 +16,7 @@ import {
 import { FcGoogle } from 'react-icons/fc';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom"
+import { toast } from "sonner"
 
 export default function LandingPage() {
   const [scrollY, setScrollY] = useState(0)
@@ -27,13 +28,13 @@ export default function LandingPage() {
     const user=JSON.parse(localStorage.getItem('user'));
  
     useEffect(()=>{
-        console.log(user);
+      
     },[user])
 
     
     const login=useGoogleLogin({
         onSuccess:(codeResp)=>GetUserprofile(codeResp),
-        onerror:(error)=>console.log(error)
+        onerror:(error)=>toast.error("Error while logging you in")
     })
 
         const GetUserprofile=async(tokenInfo)=>{
@@ -43,7 +44,7 @@ export default function LandingPage() {
                 Accept:'application/json'
             }
         }).then((resp)=>{
-            console.log(resp);
+          
             localStorage.setItem('user',JSON.stringify(resp.data));
             setOpenDialog(false);
            window.location.reload()

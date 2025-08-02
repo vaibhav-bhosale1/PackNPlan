@@ -32,7 +32,7 @@ const Createtrip = () => {
     const navigate=useNavigate()
     const handleInputChange=(name, value)=>{
         if(name=="noOfDays"&&value>9){
-            console.log("please enter days less than 9")
+            
             toast.warning("Please Enter values less than 9 days")
             return;
         }
@@ -44,7 +44,7 @@ const Createtrip = () => {
 
     const login=useGoogleLogin({
         onSuccess:(codeResp)=>GetUserprofile(codeResp),
-        onerror:(error)=>console.log(error)
+        onerror:(error)=>toast.error("Error while logging you in")
     })
 
 
@@ -73,10 +73,10 @@ const Createtrip = () => {
         .replace('{budget}',formdata?.budget)
         .replace('{totalDays}',formdata?.noOfDays)
 
-        console.log(FINAL_PROMPT)
+      
 
         const result=await chatsession.sendMessage(FINAL_PROMPT);
-        console.log(result?.response?.text())
+      
         saveAiTripData(result?.response?.text());
         setLoading(false);
       
@@ -105,7 +105,7 @@ const Createtrip = () => {
                 Accept:'application/json'
             }
         }).then((resp)=>{
-            console.log(resp);
+            
             localStorage.setItem('user',JSON.stringify(resp.data));
             setOpenDialog(false);
             onGenerateTrips();

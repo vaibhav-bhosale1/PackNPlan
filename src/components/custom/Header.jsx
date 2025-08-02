@@ -18,6 +18,7 @@ import {
 import { FcGoogle } from 'react-icons/fc';
 import axios from 'axios';
 import { Plane } from 'lucide-react';
+import { toast } from 'sonner';
 const Header = () => {
   const [openDialog,setOpenDialog]=useState(false);
   const [loading,setLoading]=useState(false);
@@ -25,13 +26,13 @@ const Header = () => {
     const user=JSON.parse(localStorage.getItem('user'));
  
     useEffect(()=>{
-        console.log(user);
+       
     },[user])
 
     
     const login=useGoogleLogin({
         onSuccess:(codeResp)=>GetUserprofile(codeResp),
-        onerror:(error)=>console.log(error)
+        onerror:(error)=>toast.error("Error While loggin you in, Please try again later")
     })
 
         const GetUserprofile=async(tokenInfo)=>{
@@ -41,7 +42,7 @@ const Header = () => {
                 Accept:'application/json'
             }
         }).then((resp)=>{
-            console.log(resp);
+          
             localStorage.setItem('user',JSON.stringify(resp.data));
             setOpenDialog(false);
            window.location.reload()
@@ -107,7 +108,7 @@ const Header = () => {
                     onClick={()=>{
                             googleLogout();
                             localStorage.clear();
-                            console.log("clicked")
+                           
                             window.location.reload()
                     }}
                 >
